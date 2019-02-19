@@ -65,18 +65,24 @@ class CapDetector:
             else:
                 area = cnt_features.get_contour_area()
                 red_distance = cnt_features.nearest_neighbor(red_cnts)[1]
-                score = area * circularity - (2 * red_distance)
-            if score > score_thresh:
-                # dis = self.get_distance(cnt)
-                # ang = self.get_angle(cnt)
-                # caps.append(Cap(dis, ang))
+                score = area * circularity - (red_distance ** 1.5)
+                if score > score_thresh:
+                    # dis = self.get_distance(cnt)
+                    # ang = self.get_angle(cnt)
+                    # caps.append(Cap(dis, ang))
+                    writing = "area:" + str(round(area)) + "  dis:" + str(round(
+                        red_distance)) + "  score:" + str(round(score))
+                    print("blue:", writing)
 
-                ellipse = cv2.fitEllipse(cnt)
-                cv2.ellipse(resized_img, ellipse, (0, 255, 0), 2)
-                print("blue")
+                    ellipse = cv2.fitEllipse(cnt)
+                    cv2.ellipse(resized_img, ellipse, (0, 255, 0), 2)
 
-            # cv2.putText(resized_img, str(round(score)), tuple(self.get_center(cnt)),
-                #            cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 150, 150), 1)
+                    font = cv2.FONT_HERSHEY_COMPLEX
+                    cv2.putText(resized_img, "(Blue) Confidence: " + str(int(score)), tuple(
+                        cnt_features.get_center()), font, .7, (255, 255, 20), 2, cv2.LINE_AA)
+
+            # cv2.putText(resized_img, str(round(score)), tuple(cnt_features.get_center()),
+            #             cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 150, 150), 1)
 
         for cnt in red_cnts:
             cnt_features = FeatureExtractor(self.CAMERA, cnt)
@@ -85,19 +91,26 @@ class CapDetector:
                 score = 0
             else:
                 area = cnt_features.get_contour_area()
-                blue_distance = cnt_features.nearest_neighbor(red_cnts)[1]
-                score = area * circularity - (2 * blue_distance)
+                blue_distance = cnt_features.nearest_neighbor(blue_cnts)[1]
+                score = area * circularity - (blue_distance ** 1.5)
 
-            if score > score_thresh:
-                # dis = self.get_distance(cnt)
-                # ang = self.get_angle(cnt)
-                # caps.append(Cap(dis, ang))
-                ellipse = cv2.fitEllipse(cnt)
-                cv2.ellipse(resized_img, ellipse, (0, 255, 0), 2)
-                print("red")
+                if score > score_thresh:
+                    # dis = self.get_distance(cnt)
+                    # ang = self.get_angle(cnt)
+                    # caps.append(Cap(dis, ang))
 
-            # cv2.putText(resized_img, str(round(score)), tuple(self.get_center(cnt)),
-            #            cv2.FONT_HERSHEY_TRIPLEX, 1, (150, 150, 255), 1)
+                    writing = "area:" + str(int(area)) + "  dis:" + str(round(
+                        blue_distance)) + "  score:" + str(round(score))
+                    print("red:", writing)
+
+                    ellipse = cv2.fitEllipse(cnt)
+                    cv2.ellipse(resized_img, ellipse, (0, 255, 0), 2)
+                    font = cv2.FONT_HERSHEY_COMPLEX
+                    cv2.putText(resized_img, "(Red) Confidence: " + str(round(score)), tuple(
+                        cnt_features.get_center()), font, .7, (20, 255, 255), 2, cv2.LINE_AA)
+
+            # cv2.putText(resized_img, str(round(score)), tuple(cnt_features.get_center()),
+            #             cv2.FONT_HERSHEY_TRIPLEX, 1, (150, 150, 255), 1)
 
             # IDEA: Filter by inertia ratio? (elongation)
 
