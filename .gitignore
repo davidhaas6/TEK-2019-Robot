@@ -1,3 +1,4 @@
 .vscode/
 programming_robot.code-workspace
 __pycache__
+.DS_Store
