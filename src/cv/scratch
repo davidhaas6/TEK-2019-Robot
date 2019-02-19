@@ -1,0 +1,37 @@
+-- drawing contours and circularity --
+cv2.drawContours(resized_img, blue_cnts, -1, (255, 200, 0, 200), 1)
+cv2.drawContours(resized_img, red_cnts, -1, (0, 200, 255, 200), 1)
+for cnt in (red_cnts + blue_cnts):
+    M = cv2.moments(cnt)
+    cX = int(M["m10"] / M["m00"])
+    cY = int(M["m01"] / M["m00"])
+    circ = str(self.circularity(cnt))[:4]
+
+    color = (255, 150, 150) if any(np.all(row == cnt)
+                                    for row in blue_cnts) else (150, 150, 255)
+
+    cv2.circle(resized_img, (cX, cY), 3, color)
+    cv2.putText(resized_img, circ, (cX+5, cY-5),
+                cv2.FONT_HERSHEY_TRIPLEX, 1, color, 1)
+
+-- filter cnts based on circularity -- 
+        # blue_circs = blue_cnts[np.where(
+        #     self.circularity(blue_cnts) > circ_thresh)]
+        # red_circs = red_cnts[np.where(
+        #     self.circularity(red_cnts) > circ_thresh)]
+        # circs = blue_circs + red_circs
+
+-- opening and closing --
+        # Open then close the red and blue mask to remove noise
+        kernel = np.ones((2, 2), np.uint8)
+        # blue_mask = cv2.morphologyEx(blue_mask, cv2.MORPH_OPEN, kernel)
+        # blue_mask = cv2.morphologyEx(blue_mask, cv2.MORPH_CLOSE, kernel)
+        # red_mask = cv2.morphologyEx(red_mask, cv2.MORPH_OPEN, kernel)
+        # red_mask = cv2.morphologyEx(red_mask, cv2.MORPH_CLOSE, kernel)
+
+
+-- masking img -- 
+        # masked_img = cv2.bitwise_and(resized_img, resized_img, mask=(blue_mask + red_mask))
+
+
+

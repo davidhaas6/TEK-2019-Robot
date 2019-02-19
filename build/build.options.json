@@ -1,0 +1,10 @@
+{
+  "builtInLibrariesFolders": "/Applications/Arduino.app/Contents/Java/libraries",
+  "customBuildProperties": "build.path=/Users/david/Documents/TEK/programming_robot/build,build.warn_data_percentage=75,runtime.tools.avrdude.path=/Applications/Arduino.app/Contents/Java/hardware/tools/avr,runtime.tools.arduinoOTA.path=/Applications/Arduino.app/Contents/Java/hardware/tools/avr,runtime.tools.avr-gcc.path=/Applications/Arduino.app/Contents/Java/hardware/tools/avr",
+  "fqbn": "arduino:avr:uno",
+  "hardwareFolders": "/Applications/Arduino.app/Contents/Java/hardware,/Users/david/Documents/MATLAB/SupportPackages/R2017a/3P.instrset/arduinoide.instrset/idepkgs/packages",
+  "otherLibrariesFolders": "/Users/david/Documents/Arduino/libraries",
+  "runtime.ide.version": "10803",
+  "sketchLocation": "/Users/david/Documents/TEK/programming_robot/src/main.h",
+  "toolsFolders": "/Applications/Arduino.app/Contents/Java/tools-builder,/Applications/Arduino.app/Contents/Java/hardware/tools/avr,/Users/david/Documents/MATLAB/SupportPackages/R2017a/3P.instrset/arduinoide.instrset/idepkgs/packages"
+}
