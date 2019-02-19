@@ -11,32 +11,31 @@ class Camera:
         if calibration_path:
             self.CALIBRATED = True
             with open(calibration_path, 'rb') as f:
-                DIMS, camera_matrix, dist = pickle.load(f)
+                self.DIMS, camera_matrix, dist = pickle.load(f)
                 self.map1, self.map2 = cv2.fisheye.initUndistortRectifyMap(
                     camera_matrix, dist, np.eye(3), camera_matrix, DIMS, cv2.CV_16SC2)
 
             self.FOCAL_LEN_X = camera_matrix[0][0]  # The X focal length
 
         else:
-            DIMS = (-1, -1)
+            self.DIMS = (-1, -1)
             self.CALIBRATED = False
 
         if not disable_video:
             self.VIDEO = True
             self.video_capture = cv2.VideoCapture(video_channel)
             _, frame = self.video_capture.read()
-            self.DIMENSIONS = frame.shape
-            self.IMG_WIDTH = self.DIMENSIONS[1]
-            self.IMG_HEIGHT = self.DIMENSIONS[0]
+            self.DIMS = frame.shape
+            self.IMG_WIDTH = self.DIMS[1]
+            self.IMG_HEIGHT = self.DIMS[0]
         else:
             self.VIDEO = False
-            self.DIMENSIONS = DIMS
+            self.DIMENSIONS = self.DIMS
             self.IMG_WIDTH = -1
             self.IMG_HEIGHT = -1
 
         if virtual:
             self.VIRTUALIZED = True
-            self.VIDEO = False
             self.virtual_img_path = virtual_source
             img_dir = os.listdir(virtual_source)
             self.src_images = [
